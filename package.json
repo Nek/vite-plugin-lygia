@@ -1,6 +1,6 @@
 {
-  "name": "vite-plugin-lygia",
-  "description": "Import GLSL from lygia.xyz",
+  "name": "vite-plugin-lygia-resolver",
+  "description": "Convenient way to import GLSL shaders from Lygia library at build time",
   "homepage": "https://github.com/Nek/vite-plugin-lygia#readme",
   "packageManager": "^npm@9.8.0",
   "types": "./src/index.d.ts",
