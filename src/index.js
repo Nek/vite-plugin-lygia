@@ -109,7 +109,7 @@ export default function ({
 
   return {
     enforce: 'pre',
-    name: 'vite-plugin-glsl',
+    name: 'vite-plugin-lygia',
 
     configResolved (resolvedConfig) {
       sourcemap = resolvedConfig.build.sourcemap;
