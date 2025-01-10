@@ -1,8 +1,8 @@
 /**
- * @module vite-plugin-glsl
- * @author Ustym Ukhman <ustym.ukhman@gmail.com>
- * @description Import, inline (and compress) GLSL shader files
- * @version 1.3.1
+ * @module vite-plugin-lygia
+ * @author Nikita Dudnik <nikdudnik@gmail.com>
+ * @description Import GLSL from lygia.xyz
+ * @version 1.0.0
  * @license MIT
  */
 
@@ -92,7 +92,7 @@ const DEFAULT_SHADERS = Object.freeze([
  * inline, (and compress) GLSL shader files
  * 
  * @see {@link https://vitejs.dev/guide/api-plugin.html}
- * @link https://github.com/UstymUkhman/vite-plugin-glsl
+ * @link https://github.com/Nek/vite-plugin-lygia
  * 
  * @param {import('./types').PluginOptions} options Plugin config object
  * 
