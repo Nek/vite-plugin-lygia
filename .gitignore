@@ -1,3 +1,7 @@
-# Folders:
 node_modules/
 test/glsl/lygia
+.lygia-cache/
+.yarn/
+yarn.lock
+.aider*
+.DS_Store

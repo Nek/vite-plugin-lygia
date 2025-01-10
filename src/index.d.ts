@@ -17,9 +17,4 @@ import type { Plugin } from 'vite';
 export default function ({
   include,
   exclude,
-  warnDuplicatedImports,
-  defaultExtension,
-  compress,
-  watch,
-  root
 }?: PluginOptions): Plugin;
