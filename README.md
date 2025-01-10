@@ -1,6 +1,6 @@
-# Vite Plugin GLSL #
+# Vite Plugin Lygia #
 
-> Import, inline (and compress) GLSL shader files
+> Import GLSL shaders from Lygia library
 
 ![npm](https://img.shields.io/npm/dt/vite-plugin-lygia?style=flat-square)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Nek/vite-plugin-lygia?color=brightgreen&style=flat-square)
