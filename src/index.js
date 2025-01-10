@@ -125,6 +125,12 @@ export default function ({
         loader: 'text', format: 'esm',
         minifyWhitespace: prod
       });
+    },
+
+    handleHotUpdate({ file, server }) {
+      if (!filter(file)) return;
+      server.ws.send({ type: 'full-reload' })
+      return []
     }
-  };
+  }
 }
