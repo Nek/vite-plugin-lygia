@@ -1,4 +1,4 @@
-# Vite Plugin Lygia #
+# Vite Plugin Lygia
 
 > Import GLSL shaders from Lygia library
 
@@ -6,23 +6,23 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Nek/vite-plugin-lygia?color=brightgreen&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/Nek/vite-plugin-lygia?color=brightgreen&style=flat-square)
 
-## Installation ##
+## Installation
 
 ```sh
-npm i vite-plugin-lygia --save-dev
+npm i vite-plugin-lygia-resolver --save-dev
 # or
-yarn add vite-plugin-lygia --dev
+yarn add vite-plugin-lygia-resolver --dev
 # or
-pnpm add -D vite-plugin-lygia
+pnpm add -D vite-plugin-lygia-resolver
 # or
-bun add vite-plugin-lygia --dev
+bun add vite-plugin-lygia-resolver --dev
 ```
 
-## Usage ##
+## Usage
 
 ```js
 // vite.config.js
-import lygia from 'vite-plugin-lygia';
+import lygia from 'vite-plugin-lygia-resolver';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -30,7 +30,7 @@ export default defineConfig({
 });
 ```
 
-### With TypeScript ###
+### With TypeScript
 
 Add extension declarations to your [`types`](https://www.typescriptlang.org/tsconfig#types) in `tsconfig.json`:
 
@@ -38,7 +38,7 @@ Add extension declarations to your [`types`](https://www.typescriptlang.org/tsco
 {
   "compilerOptions": {
     "types": [
-      "vite-plugin-lygia/ext"
+      "vite-plugin-lygia-resolver/ext"
     ]
   }
 }
@@ -47,10 +47,10 @@ Add extension declarations to your [`types`](https://www.typescriptlang.org/tsco
 or as a [package dependency directive](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-types-) to your global types:
 
 ```ts
-/// <reference types="vite-plugin-lygia/ext" />
+/// <reference types="vite-plugin-lygia-resolver/ext" />
 ```
 
-## Default Options ##
+## Default Options
 
 ```js
 glsl({
