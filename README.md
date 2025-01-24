@@ -1,13 +1,13 @@
 # Vite Plugin Lygia
 
-> Import GLSL/WGSL shaders from Lygia - a granular and modular shader library
+Import GLSL/WGSL shaders from Lygia - a granular and modular shader library.
 
 Key benefits:
-- 🔍 Automatic resolution of Lygia's module paths directly in shaders
-- ⚡ Supports both GLSL and WGSL shader languages
-- 📦 Works with local files and Lygia's CDN-hosted modules
-- 🧩 Enables modular shader composition with `#include` directives
-- 🗃️ Built-in caching for improved development performance
+- Automatic resolution of Lygia's module paths directly in shaders at build time
+- Supports both GLSL and WGSL shader languages
+- Works with local files and Lygia's CDN-hosted modules
+- Enables modular shader composition with `#include` directives
+- Built-in caching for improved development performance
 
 ![npm](https://img.shields.io/npm/dt/vite-plugin-lygia?style=flat-square)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Nek/vite-plugin-lygia?color=brightgreen&style=flat-square)
