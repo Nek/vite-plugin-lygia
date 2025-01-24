@@ -2,7 +2,7 @@
 
 Import GLSL/WGSL shaders from Lygia - a granular and modular shader library.
 
-Key benefits:
+## Key Benefits
 - Automatic resolution of Lygia's module paths directly in shaders at build time
 - Supports both GLSL and WGSL shader languages
 - Works with local files and Lygia's CDN-hosted modules
