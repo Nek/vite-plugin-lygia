@@ -1,5 +1,6 @@
 # Vite Plugin Lygia
 
+// Add an explanation why this is useful. AI!
 > Import GLSL shaders from Lygia library
 
 ![npm](https://img.shields.io/npm/dt/vite-plugin-lygia?style=flat-square)
