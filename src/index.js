@@ -154,7 +154,7 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
                 throw new Error(`Failed to fetch ${lygiaShaderUrl}: ${response.statusText}`);
               }
               const source = await response.text();
-              await fs.writeFile(lygiaShaderFilepath, content);
+              await fs.writeFile(lygiaShaderFilepath, source);
               dependencies.add(lygiaShaderFilepath);
               return source;
             }
