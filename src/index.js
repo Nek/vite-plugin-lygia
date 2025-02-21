@@ -2,11 +2,10 @@
  * @module vite-plugin-lygia-resolver
  * @author Nikita Dudnik <nikdudnik@gmail.com>
  * @description Import GLSL from lygia.xyz
- * @version 1.3.0
+ * @version 1.4.0
  * @license MIT
  */
 
-import { transformWithEsbuild } from 'vite';
 import path from 'path';
 import fetch from 'node-fetch';
 import * as fs from 'fs/promises';
