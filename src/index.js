@@ -54,14 +54,6 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
     async hotUpdate({ file, server, timestamp }) {
       if (!SHADER_EXTENSIONS.test(file)) return;
 
-      if (!enableHmr) {
-        server.ws.send({
-          type: "full-reload",
-          path: "*",
-        });
-        return [];
-      };
-
       const topLevelGLSLFiles = new Set();
       function findTopLevelGLSLFiles(file) {
         const parentShaders = shaderParents.get(file);
@@ -75,6 +67,31 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
       }
       findTopLevelGLSLFiles(file);
       console.log("topLevelGLSLFiles", topLevelGLSLFiles);
+
+      if (!enableHmr) {
+        if (topLevelGLSLFiles.size === 0) {
+          console.warn(`[vite-plugin-lygia] No top-level GLSL files found, triggering full reload.`);
+          server.ws.send({ type: "full-reload", path: "*" });
+          return;
+        }
+  
+        console.info(`[vite-plugin-lygia] Reloading top-level GLSL files: ${Array.from(topLevelGLSLFiles).join(', ')}`);
+  
+        // Step 2: Invalidate top-level GLSL files to force reloading
+        topLevelGLSLFiles.forEach((glslFile) => {
+          const mod = server.moduleGraph.getModuleById(glslFile);
+          if (mod) {
+            server.moduleGraph.invalidateModule(mod);
+          }
+        });
+  
+        // Step 3: Trigger full reload (forces Vite to actually reload the top-level GLSL file)
+        server.ws.send({
+          type: "full-reload",
+          path: "*",
+        });
+      };
+
       const modulesToReload = new Set();
       topLevelGLSLFiles.forEach((glslFile) => {
         const mod = server.moduleGraph.getModuleById(glslFile);
@@ -88,7 +105,7 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
       });
 
       if (modulesToReload.size > 0) {
-        console.info(`[vite-plugin-lygia-shader] GLSL changed: ${file}, reloading dependent modules: ${Array.from(modulesToReload).join(', ')}.`);
+        console.info(`[vite-plugin-lygia] GLSL changed: ${file}, reloading dependent modules: ${Array.from(modulesToReload).join(', ')}.`);
 
         // Invalidate all dependent modules
         modulesToReload.forEach((modulePath) => {
