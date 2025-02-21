@@ -1,4 +1,3 @@
-import type { PluginOptions } from './types.d';
 import type { Plugin } from 'vite';
 
 /**
@@ -10,8 +9,8 @@ import type { Plugin } from 'vite';
  * @see {@link https://vitejs.dev/guide/api-plugin.html}
  * @link https://github.com/UstymUkhman/vite-plugin-glsl
  * 
- * @param {PluginOptions} options Plugin config object
+ * @param {{enableHmr: boolean}} options Plugin config object
  * 
  * @returns {Plugin} Vite plugin that converts shader code
  */
-export default function (): PluginOption;
+export default function ({enableHmr}: {enableHmr: boolean}): Plugin;

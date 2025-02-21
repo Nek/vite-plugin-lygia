@@ -74,8 +74,8 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
           });
         }
       }
-
       findTopLevelGLSLFiles(file);
+      console.log("topLevelGLSLFiles", topLevelGLSLFiles);
       const modulesToReload = new Set();
       topLevelGLSLFiles.forEach((glslFile) => {
         const mod = server.moduleGraph.getModuleById(glslFile);
@@ -105,7 +105,12 @@ export default function vitePluginLygiaResolver({ enableHmr } = { enableHmr: fal
           event: "shader-update",
           data: { file, timestamp },
         });
+
+        return [];
       }
+
+      console.warn(`[vite-plugin-lygia] No top-level JS modules found for GLSL update, triggering full reload.`);
+      server.ws.send({ type: "full-reload", path: "*" });
     }
   }
 
