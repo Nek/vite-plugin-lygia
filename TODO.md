@@ -3,3 +3,4 @@
 - [ ] maybe add more, switch to preprocessor directives like GL_GOOGLE_cpp_style_line_directive and GL_GOOGLE_include_directive
 - [x] rewrite lygia resolver
 - [x] add custom HMR support
+- [ ] BUG: fix lib typings 
