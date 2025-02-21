@@ -25,7 +25,8 @@ async function ensureCacheDir() {
 async function getCachedFile(url) {
   const filename = path.join(CACHE_DIR, Buffer.from(url).toString('base64'));
   try {
-    return await fs.readFile(filename, 'utf8');
+    const source = await fs.readFile(filename, 'utf8');
+    return resolveShader(source, filename);
   } catch (err) {
     if (err.code !== 'ENOENT') throw err;
     const response = await fetch(url);
@@ -40,7 +41,8 @@ async function getCachedFile(url) {
 
 async function getLocalFile(filepath) {
   try {
-    return await fs.readFile(filepath, 'utf8');
+    const source = await fs.readFile(filepath, 'utf8');
+    return resolveShader(source, filepath);
   } catch (err) {
     throw new Error(`Failed to read local file ${filepath}: ${err.message}`);
   }
@@ -79,11 +81,11 @@ async function resolveShader(source, resourcePath) {
  * @readonly
  * @type {readonly RegExp[]}
  */
-const DEFAULT_SHADERS = Object.freeze([
-  '**/*.glsl', '**/*.wgsl',
-  '**/*.vert', '**/*.frag',
-  '**/*.vs', '**/*.fs'
-]);
+const DEFAULT_SHADERS = /(glsl|wgsl|vert|frag|vs|fs)$/;
+
+function isShader(shader) {
+  return DEFAULT_SHADERS.test(shader);
+}
 
 /**
  * @function
@@ -98,13 +100,8 @@ const DEFAULT_SHADERS = Object.freeze([
  * 
  * @returns {import('vite').Plugin} Vite plugin that converts shader code
  */
-export default function ({
-    include = DEFAULT_SHADERS,
-    exclude = undefined,
-  } = {}
-) {
+export default function () {
   let sourcemap = false;
-  const filter = createFilter(include, exclude);
   const prod = process.env.NODE_ENV === 'production';
 
   return {
@@ -116,7 +113,7 @@ export default function ({
     },
 
     async transform (source, shader) {
-      if (!filter(shader)) return;
+      if (!isShader(shader)) return;
 
       let outputShader = await resolveShader(source, shader);
       
@@ -128,7 +125,7 @@ export default function ({
     },
 
     handleHotUpdate({ file, server }) {
-      if (!filter(file)) return;
+      if (!isShader(file)) return;
       server.ws.send({ type: 'full-reload' })
       return []
     }

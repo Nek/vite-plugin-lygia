@@ -14,7 +14,4 @@ import type { Plugin } from 'vite';
  * 
  * @returns {Plugin} Vite plugin that converts shader code
  */
-export default function ({
-  include,
-  exclude,
-}?: PluginOptions): Plugin;
+export default function (): PluginOption;
