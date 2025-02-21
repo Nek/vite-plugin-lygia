@@ -6,35 +6,37 @@
  * @license MIT
  */
 
-import { createFilter } from '@rollup/pluginutils';
 import { transformWithEsbuild } from 'vite';
 import path from 'path';
 import fetch from 'node-fetch';
 import * as fs from 'fs/promises';
 
-const CACHE_DIR = path.join(process.cwd(), '.lygia-cache');
+const CACHE_DIR = path.join(process.cwd(), '.lygia');
 
-async function ensureCacheDir() {
+async function ensureLygiaCacheDir(lygiaShaderInclude) {
   try {
-    await fs.mkdir(CACHE_DIR, { recursive: true });
+    const shaderFileDir = path.dirname(path.join(CACHE_DIR, lygiaShaderInclude.substring(5)));
+    await fs.mkdir(shaderFileDir, { recursive: true });
   } catch (err) {
     if (err.code !== 'EEXIST') throw err;
   }
 }
 
-async function getCachedFile(url) {
-  const filename = path.join(CACHE_DIR, Buffer.from(url).toString('base64'));
+async function getCachedLygiaFile(lygiaShaderInclude) {
+  const lygiaShaderPathname = lygiaShaderInclude.substring(5);
+  const lygiaShaderFile = path.join(CACHE_DIR, lygiaShaderPathname);
   try {
-    const source = await fs.readFile(filename, 'utf8');
-    return resolveShader(source, filename);
+    const source = await fs.readFile(lygiaShaderFile, 'utf8');
+    return resolveShader(source, lygiaShaderFile);
   } catch (err) {
     if (err.code !== 'ENOENT') throw err;
-    const response = await fetch(url);
+    const lygiaShaderUrl = 'https://lygia.xyz' + lygiaShaderPathname;
+    const response = await fetch(lygiaShaderUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${lygiaShaderUrl}: ${response.statusText}`);
     }
     const content = await response.text();
-    await fs.writeFile(filename, content);
+    await fs.writeFile(lygiaShaderFile, content);
     return content;
   }
 }
@@ -49,7 +51,6 @@ async function getLocalFile(filepath) {
 }
 
 async function resolveShader(source, resourcePath) {
-  await ensureCacheDir();
   
   const lines = source.split(/\r?\n/);
   const resolvedLines = await Promise.all(
@@ -59,9 +60,8 @@ async function resolveShader(source, resourcePath) {
         const includePath = line_trim.substring(9).replace(/\"|\;|\s/g, '');
         
         if (includePath.startsWith('lygia')) {
-          const include_url = 'https://lygia.xyz' + 
-            includePath.substring(5);
-          return await getCachedFile(include_url);
+          await ensureLygiaCacheDir(includePath);
+          return await getCachedLygiaFile(includePath);
         } else {
           // Resolve local path relative to the current shader file
           const localPath = path.resolve(path.dirname(resourcePath), includePath);
