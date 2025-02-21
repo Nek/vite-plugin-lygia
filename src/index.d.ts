@@ -1,5 +1,7 @@
 import type { Plugin } from 'vite';
-
+type PluginOptions = {
+  enableHmr: boolean;
+}
 /**
  * @function
  * @name glsl
@@ -13,4 +15,4 @@ import type { Plugin } from 'vite';
  * 
  * @returns {Plugin} Vite plugin that converts shader code
  */
-export default function ({enableHmr}: {enableHmr: boolean}): Plugin;
+export default function (options?: PluginOptions): Plugin;
